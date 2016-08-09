@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-import random
-from IPython.display import Image, HTML, display
-import webbrowser
-
 from __future__ import print_function
+
+import random
+from IPython.display import HTML, display
+import webbrowser
 
 
 def show_students(groups):
@@ -109,12 +109,19 @@ def name_counter(pars):
     return total_names
 
 
+def get_name_list(student_file):
+    """Read in student names from a file."""
+    student_names = [line.rstrip() for line in open(student_file)]
+
+    return student_names
+
+
 def create_groups(student_file, parameters):
     """Create groups of students from a text file of student names."""
     list_of_groups = []
 
     # read in student names from a file
-    student_names = [line.rstrip() for line in open(student_file)]
+    student_names = get_name_list(student_file)
 
     # return error if number of students in groups != total number students
     total = name_counter(parameters)
@@ -138,3 +145,42 @@ def create_groups(student_file, parameters):
             num += 1
 
     return list_of_groups
+
+if __name__ == "__main__":
+    import sys
+
+    if len(sys.argv) > 1:
+        fname = sys.argv[1]
+        namelist = get_name_list(fname)
+
+        if len(namelist) % 2:
+            group_configs = [1, int(len(namelist) / 2)]
+
+        else:
+            group_configs = [0, int(len(namelist) / 2)]
+
+        groups = create_groups(fname, group_configs)
+
+        print("\nGROUP PAIRS:\n")
+        for group in groups:
+            print("\t" + str(group))
+
+        print("\n")
+
+    else:
+        outstr = [
+            "\n              ****************************************\n",
+            "              ****************************************\n",
+            "              **                                    **\n",
+            "              **               ERROR                **\n",
+            "              **                                    **\n",
+            "              ****************************************\n",
+            "              ****************************************\n",
+            "\nThis will not work from the command line without a file ",
+            "containing a list\nof student names.\n\nEach full name should ",
+            "be separated by a new line.\n\nSupply the name of the file ",
+            "containing the list like so:\n\n$ python ",
+            "student_group_creator.py my_name_list.txt\n"
+        ]
+
+        print("".join(outstr))
