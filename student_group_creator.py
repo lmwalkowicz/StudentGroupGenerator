@@ -10,7 +10,6 @@ def show_students(groups):
     """Make student pictures display in their groups in an IPython notebook
     NB: requires that image file names are the same as student names in the
     input list"""
-
     photo_dir = './photodir/'
     # take each group list and parse student names into image file names
     # (strip space, add .jpg)
@@ -22,11 +21,11 @@ def show_students(groups):
             individual_names = student_group[j]
             individual_names = individual_names.replace(" ", "")
             individual_names += '.jpg'
-            file_name = photo_dir+individual_names
+            file_name = photo_dir + individual_names
             list_of_image_names.append(file_name)
             # we also want the student name captions to be generated
             # automatically from file names
-            if j != len(student_group)-1:
+            if j != len(student_group) - 1:
                 caption_names += student_group[j] + ', '
             else:
                 caption_names += student_group[j]
@@ -52,7 +51,6 @@ def show_students_in_browser(groups):
     NB: requires that image file names are the same as student names in the input list
     default browser is chrome, preferred browser can be set by altering the
     below."""
-
     browser_path = 'open -a /Applications/Google\ Chrome.app %s'
     photo_dir = './photodir/'
     outfile = open("groups.html", "w")
@@ -72,7 +70,7 @@ def show_students_in_browser(groups):
             individual_names = student_group[j]
             individual_names = individual_names.replace(" ", "")
             individual_names += '.jpg'
-            file_name = photo_dir+individual_names
+            file_name = photo_dir + individual_names
             list_of_image_names.append(file_name)
             # we also want the student name captions to be generated
             # automatically from file names
@@ -107,15 +105,12 @@ def name_counter(pars):
     i = 0
     for item in pars:
         i = i + 1
-        total_names = total_names + i*pars[i-1]
+        total_names = total_names + i * pars[i - 1]
     return total_names
 
 
 def create_groups(student_file, parameters):
-    """
-    Create groups of students from a text file of student names.
-    """
-
+    """Create groups of students from a text file of student names."""
     list_of_groups = []
 
     # read in student names from a file
